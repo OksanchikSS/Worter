@@ -6,51 +6,53 @@
   <title>Worter — картки для слів</title>
 
   <style>
-    /* ====== BASE ====== */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f6f8;
+      min-height: 100vh;
       display: flex;
+      align-items: center;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
-    /* ====== LAYOUT ====== */
+    /* 3 колонки: стрілка | центр | стрілка */
     .wrapper {
-      display: flex;
+      width: min(900px, 100%);
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 60px 1fr 60px;
       align-items: center;
-      gap: 32px;
+      justify-items: center;
     }
 
-    /* ====== ARROWS ====== */
- .arrow {
-  width: 60px;
-  height: 60px;
-  font-size: 48px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
+    .arrow {
+      width: 60px;
+      height: 60px;
+      font-size: 48px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #111;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      user-select: none;
+    }
 
     .arrow:hover {
       color: #4f46e5;
+      transform: scale(1.08);
     }
 
-    /* ====== CARD ====== */
     .carousel {
       perspective: 1200px;
+      justify-self: center; /* гарантує центр у середині */
     }
 
     .card {
-      width: 380px;
-      height: 240px;
+      width: 420px;
+      height: 260px;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.6s;
@@ -63,13 +65,12 @@
 
     .card__side {
       position: absolute;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       backface-visibility: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 34px;
       border-radius: 18px;
       box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
       padding: 20px;
@@ -78,6 +79,7 @@
 
     .card__front {
       background: #ffffff;
+      color: #111;
     }
 
     .card__back {
@@ -86,19 +88,43 @@
       transform: rotateY(180deg);
     }
 
-    /* ====== COUNTER ====== */
     .counter {
       position: fixed;
       bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 14px;
       color: #555;
     }
+
+    /* Адаптація для телефону */
+    @media (max-width: 520px) {
+      .wrapper {
+        grid-template-columns: 50px 1fr 50px;
+      }
+
+      .arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 40px;
+      }
+
+      .card {
+        width: 320px;
+        height: 210px;
+      }
+
+      .card__side {
+        font-size: 28px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <div class="wrapper">
-    <button class="arrow" onclick="prevCard()">&#8249;</button>
+    <button class="arrow" type="button" aria-label="Назад" onclick="prevCard()">&#8249;</button>
 
     <div class="carousel">
       <div class="card" id="card">
@@ -107,18 +133,18 @@
       </div>
     </div>
 
-    <button class="arrow" onclick="nextCard()">&#8250;</button>
+    <button class="arrow" type="button" aria-label="Вперед" onclick="nextCard()">&#8250;</button>
   </div>
 
   <div class="counter" id="counter"></div>
 
   <script>
     const words = [
-      { front: 'gehen', back: 'йти' },
-      { front: 'kommen', back: 'приходити' },
-      { front: 'lernen', back: 'вчити, навчатися' },
-      { front: 'sprechen', back: 'говорити' },
-      { front: 'sehen', back: 'бачити' }
+      { front: 'gehen',   back: 'йти' },
+      { front: 'kommen',  back: 'приходити' },
+      { front: 'lernen',  back: 'вчити, навчатися' },
+      { front: 'sprechen',back: 'говорити' },
+      { front: 'sehen',   back: 'бачити' }
     ];
 
     let index = 0;
@@ -148,6 +174,12 @@
       index = (index - 1 + words.length) % words.length;
       renderCard();
     }
+
+    // Листання клавішами
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextCard();
+      if (e.key === 'ArrowLeft') prevCard();
+    });
 
     renderCard();
   </script>
