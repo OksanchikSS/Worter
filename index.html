@@ -7,15 +7,24 @@
 
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  margin: 0;
+  font-family: Arial, sans-serif;
 
+  /* ФОН */
+  background-image: url("background.png");
+  background-size: cover;          /* на всю сторінку */
+  background-position: center;     /* по центру */
+  background-repeat: no-repeat;
+  background-attachment: fixed;    /* ⬅️ НЕ ПРОКРУЧУЄТЬСЯ */
+
+  /* ЦЕНТРУВАННЯ КАРТКИ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+  overflow: hidden;                /* ⬅️ нічого не прокручується */
+}
     /* 3 колонки: стрілка | центр | стрілка */
     .wrapper {
       width: min(900px, 100%);
