@@ -25,15 +25,16 @@
   min-height: 100vh;
   overflow: hidden;                /* ⬅️ нічого не прокручується */
 }
-    /* 3 колонки: стрілка | центр | стрілка */
-    .wrapper {
-      width: min(900px, 100%);
-      padding: 0 16px;
-      display: grid;
-      grid-template-columns: 60px 1fr 60px;
-      align-items: center;
-      justify-items: center;
-    }
+  .wrapper {
+  width: min(900px, 100%);
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  align-items: center;
+  justify-items: center;
+  position: relative;
+  z-index: 1;
+}
 
     .arrow {
       width: 60px;
