@@ -165,159 +165,419 @@
 
   <div class="counter" id="counter"></div>
 
-  <script>
-  const words = [
-    { front: "der Kurierdienst, -e", back: "курьерская служба" },
-    { front: "die Auslieferung, -en", back: "доставка (развоз), выдача" },
+<script>
+  // ОСНОВНИЙ СПИСОК + extras (додаткові слова/частини)
+  const baseWords = [
+    { front: "der Kurierdienst, -e", back: "курьерская служба",
+      extras: [
+        { front: "der Kurier, -e", back: "курьер" },
+        { front: "der Dienst, -e", back: "служба, сервис" }
+      ]
+    },
+
+    { front: "die Auslieferung, -en", back: "доставка (развоз), выдача",
+      extras: [
+        { front: "liefern", back: "доставлять, поставлять" },
+        { front: "die Lieferung, -en", back: "поставка, доставка (как результат/партия)" }
+      ]
+    },
+
     { front: "die Ware, -n", back: "товар" },
-    { front: "die Beladung, -en", back: "погрузка" },
-    { front: "ausladen", back: "разгружать" },
 
-    { front: "voraussetzen", back: "предполагать, требовать (как условие)" },
+    { front: "die Beladung, -en", back: "погрузка",
+      extras: [
+        { front: "laden", back: "грузить; (также) заряжать" },
+        { front: "die Ladung, -en", back: "груз; заряд" },
+        { front: "der Laden, -¨", back: "магазин (другое значение слова!)" }
+      ]
+    },
 
-    { front: "selbstständig", back: "самостоятельный; самозанятый" },
-    { front: "zuverlässig", back: "надёжный" },
+    { front: "ausladen", back: "разгружать",
+      extras: [
+        { front: "laden", back: "грузить; заряжать" },
+        { front: "aus-", back: "приставка: «из-, наружу-»" }
+      ]
+    },
 
-    { front: "die Arbeitsweise, -n", back: "способ работы, метод работы" },
-    { front: "die Weise, -n", back: "способ, манера", extra: true },
+    { front: "voraussetzen", back: "предполагать, требовать (как условие)",
+      extras: [
+        { front: "setzen", back: "ставить; сажать; помещать" },
+        { front: "die Voraussetzung, -en", back: "условие, предпосылка" }
+      ]
+    },
 
-    { front: "unbefristet", back: "бессрочный" },
+    { front: "selbstständig", back: "самостоятельный; самозанятый",
+      extras: [
+        { front: "selbst", back: "сам" },
+        { front: "ständig", back: "постоянный" }
+      ]
+    },
 
-    { front: "der Arbeitsvertrag, -e", back: "трудовой договор" },
-    { front: "der Vertrag, -¨e", back: "договор, контракт", extra: true },
+    { front: "zuverlässig", back: "надёжный",
+      extras: [
+        { front: "sich verlassen auf", back: "полагаться на" }
+      ]
+    },
 
-    { front: "krisensicher", back: "устойчивый к кризисам, надёжный в кризис" },
+    { front: "die Arbeitsweise, -n", back: "способ работы, метод работы",
+      extras: [
+        { front: "die Weise, -n", back: "способ, манера" }
+      ]
+    },
 
-    { front: "der Arbeitgeber, =", back: "работодатель" },
-    { front: "der Geber, =", back: "тот, кто даёт; даритель (дающая сторона)", extra: true },
+    { front: "unbefristet", back: "бессрочный",
+      extras: [
+        { front: "befristet", back: "срочный, ограниченный по сроку" },
+        { front: "die Frist, -en", back: "срок, установленный период" }
+      ]
+    },
 
-    { front: "die Schichteinteilung, -en", back: "распределение смен, график смен" },
-    { front: "die Einteilung, -en", back: "распределение, деление", extra: true },
+    { front: "der Arbeitsvertrag, -e", back: "трудовой договор",
+      extras: [
+        { front: "der Vertrag, -¨e", back: "договор, контракт" }
+      ]
+    },
 
-    { front: "die Aushilfe, -n", back: "подработка; помощник/временный работник" },
+    { front: "krisensicher", back: "устойчивый к кризисам, надёжный в кризис",
+      extras: [
+        { front: "die Krise, -n", back: "кризис" },
+        { front: "sicher", back: "надёжный, безопасный" }
+      ]
+    },
 
-    { front: "das Unternehmen, =", back: "предприятие, компания" },
+    { front: "der Arbeitgeber, =", back: "работодатель",
+      extras: [
+        { front: "geben", back: "давать" }
+      ]
+    },
+
+    { front: "die Schichteinteilung, -en", back: "распределение смен, график смен",
+      extras: [
+        { front: "die Schicht, -en", back: "смена" },
+        { front: "die Einteilung, -en", back: "распределение, деление" }
+      ]
+    },
+
+    { front: "die Aushilfe, -n", back: "подработка; помощник/временный работник",
+      extras: [
+        { front: "helfen", back: "помогать" },
+        { front: "die Hilfe, -n", back: "помощь" }
+      ]
+    },
+
+    { front: "das Unternehmen, =", back: "предприятие, компания",
+      extras: [
+        { front: "unternehmen", back: "предпринимать" }
+      ]
+    },
 
     { front: "die Voraussetzung, -en", back: "условие, предпосылка, требование" },
-    { front: "die Voraussetzung, -en", back: "условие, предпосылка (повтор для закрепления)", extra: true },
 
     { front: "gängig", back: "распространённый, обычный" },
+
     { front: "das Geschick, -e (meist Sg.)", back: "ловкость, умение" },
-    { front: "das Verhalten, = (meist Sg.)", back: "поведение" },
-    { front: "der Nachwuchs (nur Sg.)", back: "потомство; молодёжь/кадровая смена" },
-    { front: "mehrjährig", back: "многолетний" },
+
+    { front: "das Verhalten, = (meist Sg.)", back: "поведение",
+      extras: [
+        { front: "sich verhalten", back: "вести себя" }
+      ]
+    },
+
+    { front: "der Nachwuchs (nur Sg.)", back: "потомство; молодёжь/кадровая смена",
+      extras: [
+        { front: "wachsen", back: "расти" }
+      ]
+    },
+
+    { front: "mehrjährig", back: "многолетний",
+      extras: [
+        { front: "das Jahr, -e", back: "год" }
+      ]
+    },
+
     { front: "fundiert", back: "основательный, обоснованный" },
+
     { front: "angemessen", back: "соответствующий, адекватный" },
+
     { front: "das Honorar, -e (meist Sg.)", back: "гонорар" },
-    { front: "familienfreundlich", back: "дружелюбный к семье/семейный" },
 
-    { front: "das Arbeitsverhältnis, -se", back: "трудовые отношения" },
-    { front: "das Verhältnis, -se", back: "отношение, соотношение, связь", extra: true },
+    { front: "familienfreundlich", back: "дружелюбный к семье/семейный",
+      extras: [
+        { front: "die Familie, -n", back: "семья" },
+        { front: "freundlich", back: "дружелюбный" }
+      ]
+    },
 
-    { front: "die Betreuung, -en", back: "уход; присмотр; сопровождение/кураторство" },
+    { front: "das Arbeitsverhältnis, -se", back: "трудовые отношения",
+      extras: [
+        { front: "das Verhältnis, -se", back: "отношение, соотношение, связь" }
+      ]
+    },
+
+    { front: "die Betreuung, -en", back: "уход; присмотр; сопровождение/кураторство",
+      extras: [
+        { front: "betreuen", back: "присматривать; курировать" }
+      ]
+    },
 
     { front: "die Leitung, -en", back: "руководство; управление" },
+
     { front: "präzise", back: "точный" },
 
-    { front: "die Bereitschaft, -en (meist Sg.)", back: "готовность" },
+    { front: "die Bereitschaft, -en (meist Sg.)", back: "готовность",
+      extras: [
+        { front: "bereit", back: "готовый" }
+      ]
+    },
 
-    { front: "die Weiterbildung, -en", back: "повышение квалификации, дальнейшее обучение" },
-    { front: "die Bildung, -en", back: "образование", extra: true },
+    { front: "die Weiterbildung, -en", back: "повышение квалификации, дальнейшее обучение",
+      extras: [
+        { front: "weiter", back: "дальше" },
+        { front: "die Bildung, -en", back: "образование" }
+      ]
+    },
 
-    { front: "die Geschäftsleitung, -en", back: "руководство компании (дирекция)" },
-    { front: "die Leitung, -en", back: "руководство; управление", extra: true },
+    { front: "die Geschäftsleitung, -en", back: "руководство компании (дирекция)",
+      extras: [
+        { front: "das Geschäft, -e", back: "дело; бизнес; магазин" },
+        { front: "die Leitung, -en", back: "руководство; управление" }
+      ]
+    },
 
     { front: "der Input, -s (meist Sg.)", back: "вклад; ввод/информация (input)" },
-    { front: "anwenden", back: "применять" },
-    { front: "wertvoll", back: "ценный" },
-    { front: "der Eindruck, -e", back: "впечатление" },
 
-    { front: "die Stressresistenz (nur Sg.)", back: "стрессоустойчивость" },
-    { front: "die Resistenz, -en", back: "устойчивость; сопротивляемость", extra: true },
+    { front: "anwenden", back: "применять",
+      extras: [
+        { front: "verwenden", back: "использовать" }
+      ]
+    },
 
-    { front: "festigen", back: "укреплять, закреплять" },
+    { front: "wertvoll", back: "ценный",
+      extras: [
+        { front: "der Wert, -e", back: "ценность, стоимость" }
+      ]
+    },
 
-    { front: "der Zeitdruck (nur Sg.)", back: "нехватка времени, давление по времени" },
-    { front: "der Druck, -¨e", back: "давление", extra: true },
+    { front: "der Eindruck, -e", back: "впечатление",
+      extras: [
+        { front: "drücken", back: "нажимать; выражать" }
+      ]
+    },
+
+    { front: "die Stressresistenz (nur Sg.)", back: "стрессоустойчивость",
+      extras: [
+        { front: "der Stress (nur Sg.)", back: "стресс" },
+        { front: "die Resistenz, -en", back: "устойчивость; сопротивляемость" }
+      ]
+    },
+
+    { front: "festigen", back: "укреплять, закреплять",
+      extras: [
+        { front: "fest", back: "крепкий" }
+      ]
+    },
+
+    { front: "der Zeitdruck (nur Sg.)", back: "нехватка времени, давление по времени",
+      extras: [
+        { front: "die Zeit, -en", back: "время" },
+        { front: "der Druck, -¨e", back: "давление" }
+      ]
+    },
 
     { front: "mehrfach", back: "многократно; неоднократно" },
 
-    { front: "sich auszahlen", back: "окупаться, приносить пользу" },
-    { front: "auszahlen", back: "выплачивать; (перен.) окупаться", extra: true },
+    { front: "sich auszahlen", back: "окупаться, приносить пользу",
+      extras: [
+        { front: "auszahlen", back: "выплачивать; (перен.) окупаться" }
+      ]
+    },
 
-    { front: "die Tätigkeit, -en", back: "деятельность; занятие; работа" },
+    { front: "die Tätigkeit, -en", back: "деятельность; занятие; работа",
+      extras: [
+        { front: "tätig", back: "деятельный; занятый" }
+      ]
+    },
 
-    { front: "die Werbeagentur, -en", back: "рекламное агентство" },
-    { front: "die Agentur, -en", back: "агентство", extra: true },
+    { front: "die Werbeagentur, -en", back: "рекламное агентство",
+      extras: [
+        { front: "die Werbung (nur Sg.)", back: "реклама" },
+        { front: "die Agentur, -en", back: "агентство" }
+      ]
+    },
 
-    { front: "die Stellenanzeige, -n", back: "объявление о вакансии" },
-    { front: "die Anzeige, -n", back: "объявление", extra: true },
+    { front: "die Stellenanzeige, -n", back: "объявление о вакансии",
+      extras: [
+        { front: "die Anzeige, -n", back: "объявление" }
+      ]
+    },
 
-    { front: "die Buchhaltung, -en (meist Sg.)", back: "бухгалтерия, бухгалтерский учёт" },
-    { front: "die Haltung, -en", back: "позиция; осанка; удерживание (слово-основа)", extra: true },
+    { front: "die Buchhaltung, -en (meist Sg.)", back: "бухгалтерия, бухгалтерский учёт",
+      extras: [
+        { front: "halten", back: "держать; соблюдать" },
+        { front: "die Haltung, -en", back: "позиция; осанка; удерживание" }
+      ]
+    },
 
-    { front: "beteiligt", back: "вовлечённый; участвующий" },
-    { front: "vorherig", back: "предыдущий" },
+    { front: "beteiligt", back: "вовлечённый; участвующий",
+      extras: [
+        { front: "der Teil, -e", back: "часть" }
+      ]
+    },
 
-    { front: "vertraut sein mit", back: "быть знакомым с, разбираться в" },
-    { front: "vertraut", back: "знакомый; доверенный", extra: true },
+    { front: "vorherig", back: "предыдущий",
+      extras: [
+        { front: "vorher", back: "до этого, заранее" }
+      ]
+    },
 
-    { front: "das Aufgabengebiet, -e", back: "круг задач, область обязанностей" },
-    { front: "das Gebiet, -e", back: "область, территория", extra: true },
+    { front: "vertraut sein mit", back: "быть знакомым с, разбираться в",
+      extras: [
+        { front: "vertraut", back: "знакомый; доверенный" }
+      ]
+    },
+
+    { front: "das Aufgabengebiet, -e", back: "круг задач, область обязанностей",
+      extras: [
+        { front: "die Aufgabe, -n", back: "задача" },
+        { front: "das Gebiet, -e", back: "область, территория" }
+      ]
+    },
 
     { front: "flüssig", back: "бегло (о языке); плавный" },
-    { front: "bisherig", back: "до сих пор; прежний" },
 
-    { front: "sich einer Herausforderung stellen", back: "принять вызов, справиться с трудностью" },
-    { front: "die Herausforderung, -en", back: "вызов, трудная задача", extra: true },
+    { front: "bisherig", back: "до сих пор; прежний",
+      extras: [
+        { front: "bisher", back: "до сих пор" }
+      ]
+    },
 
-    { front: "lernbereit", back: "готовый учиться" },
+    { front: "sich einer Herausforderung stellen", back: "принять вызов, справиться с трудностью",
+      extras: [
+        { front: "die Herausforderung, -en", back: "вызов, трудная задача" },
+        { front: "stellen", back: "ставить; (здесь) столкнуться, противостоять" }
+      ]
+    },
 
-    { front: "zur Verfügung stehen", back: "быть в распоряжении, быть доступным" },
-    { front: "die Verfügung, -en", back: "распоряжение; (юр.) постановление", extra: true },
+    { front: "lernbereit", back: "готовый учиться",
+      extras: [
+        { front: "lernen", back: "учиться" }
+      ]
+    },
+
+    { front: "zur Verfügung stehen", back: "быть в распоряжении, быть доступным",
+      extras: [
+        { front: "die Verfügung, -en", back: "распоряжение; (юр.) постановление" }
+      ]
+    },
 
     { front: "die Lücke, -n", back: "пробел, брешь" },
 
-    { front: "zur Welt bringen", back: "родить (ребёнка)" },
-    { front: "die Welt (nur Sg.)", back: "мир", extra: true },
+    { front: "zur Welt bringen", back: "родить (ребёнка)",
+      extras: [
+        { front: "die Welt (nur Sg.)", back: "мир" },
+        { front: "bringen", back: "приносить" }
+      ]
+    },
 
-    { front: "die Elternzeit (nur Sg.)", back: "родительский отпуск" },
-    { front: "die Zeit, -en", back: "время", extra: true },
+    { front: "die Elternzeit (nur Sg.)", back: "родительский отпуск",
+      extras: [
+        { front: "die Eltern (Pl.)", back: "родители" },
+        { front: "die Zeit, -en", back: "время" }
+      ]
+    },
 
-    { front: "sich weiterentwickeln", back: "развиваться дальше" },
-    { front: "entwickeln", back: "развивать(ся)", extra: true },
+    { front: "sich weiterentwickeln", back: "развиваться дальше",
+      extras: [
+        { front: "entwickeln", back: "развивать(ся)" }
+      ]
+    },
 
-    { front: "erkrankt", back: "заболевший" },
+    { front: "erkrankt", back: "заболевший",
+      extras: [
+        { front: "krank", back: "больной" }
+      ]
+    },
 
-    { front: "die Fachkenntnis, -se", back: "профессиональные знания" },
-    { front: "die Kenntnis, -se", back: "знание, осведомлённость", extra: true },
+    { front: "die Fachkenntnis, -se", back: "профессиональные знания",
+      extras: [
+        { front: "die Kenntnis, -se", back: "знание, осведомлённость" }
+      ]
+    },
 
     { front: "der Tutor, -en", back: "тьютор, наставник" },
-    { front: "der Ablauf, -e", back: "ход процесса, последовательность" },
-    { front: "wöchentlich", back: "еженедельно" },
 
-    { front: "der Abteilungsleiter, =", back: "руководитель отдела" },
-    { front: "der Leiter, =", back: "руководитель; (также) лестница", extra: true },
+    { front: "der Ablauf, -e", back: "ход процесса, последовательность",
+      extras: [
+        { front: "laufen", back: "бежать; идти (о процессе)" }
+      ]
+    },
 
-    { front: "zukünftig", back: "будущий; в дальнейшем" },
+    { front: "wöchentlich", back: "еженедельно",
+      extras: [
+        { front: "die Woche, -n", back: "неделя" }
+      ]
+    },
 
-    { front: "die Einarbeitungsphase, -n", back: "период ввода в работу, адаптация" },
-    { front: "die Phase, -n", back: "фаза, этап", extra: true },
+    { front: "der Abteilungsleiter, =", back: "руководитель отдела",
+      extras: [
+        { front: "die Abteilung, -en", back: "отдел" },
+        { front: "der Leiter, =", back: "руководитель; (также) лестница" }
+      ]
+    },
+
+    { front: "zukünftig", back: "будущий; в дальнейшем",
+      extras: [
+        { front: "die Zukunft (nur Sg.)", back: "будущее" }
+      ]
+    },
+
+    { front: "die Einarbeitungsphase, -n", back: "период ввода в работу, адаптация",
+      extras: [
+        { front: "einarbeiten", back: "вводить в работу; врабатываться" },
+        { front: "die Phase, -n", back: "фаза, этап" }
+      ]
+    },
 
     { front: "ausführlich", back: "подробный" },
 
-    { front: "die Filialleitung, -en", back: "руководство филиала" },
-    { front: "die Leitung, -en", back: "руководство; управление", extra: true },
+    { front: "die Filialleitung, -en", back: "руководство филиала",
+      extras: [
+        { front: "die Filiale, -n", back: "филиал" },
+        { front: "die Leitung, -en", back: "руководство; управление" }
+      ]
+    },
 
     { front: "der Rat (nur Sg.)", back: "совет" },
-    { front: "skeptisch", back: "скептический" },
-    { front: "betreuen", back: "присматривать; сопровождать; курировать" },
-    { front: "zufällig", back: "случайный; случайно" },
-    { front: "kündigen", back: "увольнять(ся); расторгать договор" },
 
-    { front: "das Richtige für jemanden sein", back: "быть подходящим/правильным для кого-то" },
-    { front: "richtig", back: "правильный, верный", extra: true }
+    { front: "skeptisch", back: "скептический" },
+
+    { front: "betreuen", back: "присматривать; сопровождать; курировать" },
+
+    { front: "zufällig", back: "случайный; случайно" },
+
+    { front: "kündigen", back: "увольнять(ся); расторгать договор",
+      extras: [
+        { front: "die Kündigung, -en", back: "увольнение; расторжение договора" }
+      ]
+    },
+
+    { front: "das Richtige für jemanden sein", back: "быть подходящим/правильным для кого-то",
+      extras: [
+        { front: "richtig", back: "правильный, верный" }
+      ]
+    }
   ];
+
+  // Разворачиваем: после каждого пункта добавляем его extras как отдельные карточки (extra:true)
+  const words = [];
+  for (const item of baseWords) {
+    words.push({ front: item.front, back: item.back }); // основная карточка
+    if (Array.isArray(item.extras)) {
+      for (const ex of item.extras) {
+        words.push({ front: ex.front, back: ex.back, extra: true }); // дополнительная (коралловая)
+      }
+    }
+  }
 
   let index = 0;
 
@@ -330,12 +590,11 @@
     card.classList.remove('is-flipped');
 
     const item = words[index];
-
     front.textContent = item.front;
     back.textContent = item.back;
 
-    // якщо extra: true → кораловий фон на back-стороні
-    back.classList.toggle('card__back--extra', !!item.extra);
+    // Включаем коралловый фон для extra
+    back.classList.toggle('card__back--extra', item.extra === true);
 
     counter.textContent = `${index + 1} / ${words.length}`;
   }
