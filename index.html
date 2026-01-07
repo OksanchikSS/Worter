@@ -166,121 +166,201 @@
   <div class="counter" id="counter"></div>
 
   <script>
-const words = [
-  { front: "der Kurierdienst, -e", back: "курьерская служба" },
-  { front: "die Auslieferung, -en", back: "доставка (развоз), выдача" },
-  { front: "die Ware, -n", back: "товар" },
-  { front: "die Beladung, -en", back: "погрузка" },
-  { front: "ausladen", back: "разгружать" },
-  { front: "voraussetzen", back: "предполагать, требовать (как условие)" },
-  { front: "selbstständig", back: "самостоятельный; самозанятый" },
-  { front: "zuverlässig", back: "надёжный" },
-  { front: "die Arbeitsweise, -n", back: "способ работы, метод работы" },
-  { front: "unbefristet", back: "бессрочный" },
-  { front: "der Arbeitsvertrag, -e", back: "трудовой договор" },
-  { front: "krisensicher", back: "устойчивый к кризисам, надёжный в кризис" },
-  { front: "der Arbeitgeber, =", back: "работодатель" },
-  { front: "die Schichteinteilung, -en", back: "распределение смен, график смен" },
-  { front: "die Aushilfe, -n", back: "подработка; помощник/временный работник" },
-  { front: "das Unternehmen, =", back: "предприятие, компания" },
-  { front: "die Voraussetzung, -en", back: "условие, предпосылка, требование" },
-  { front: "gängig", back: "распространённый, обычный" },
-  { front: "das Geschick, -e (meist Sg.)", back: "ловкость, умение" },
-  { front: "das Verhalten, = (meist Sg.)", back: "поведение" },
-  { front: "der Nachwuchs (nur Sg.)", back: "потомство; молодёжь/кадровая смена" },
-  { front: "mehrjährig", back: "многолетний" },
-  { front: "fundiert", back: "основательный, обоснованный" },
-  { front: "angemessen", back: "соответствующий, адекватный" },
-  { front: "das Honorar, -e (meist Sg.)", back: "гонорар" },
-  { front: "familienfreundlich", back: "дружелюбный к семье/семейный" },
-  { front: "das Arbeitsverhältnis, -se", back: "трудовые отношения" },
-  { front: "die Betreuung, -en", back: "уход; присмотр; сопровождение/кураторство" },
-  { front: "die Leitung, -en", back: "руководство; руководство (как управление)" },
-  { front: "präzise", back: "точный" },
-  { front: "die Bereitschaft, -en (meist Sg.)", back: "готовность" },
-  { front: "die Weiterbildung, -en", back: "повышение квалификации, дальнейшее обучение" },
-  { front: "die Geschäftsleitung, -en", back: "руководство компании (дирекция)" },
-  { front: "der Input, -s (meist Sg.)", back: "вклад; ввод/информация (input)" },
-  { front: "anwenden", back: "применять" },
-  { front: "wertvoll", back: "ценный" },
-  { front: "der Eindruck, -e", back: "впечатление" },
-  { front: "die Stressresistenz (nur Sg.)", back: "стрессоустойчивость" },
+  const words = [
+    { front: "der Kurierdienst, -e", back: "курьерская служба" },
+    { front: "die Auslieferung, -en", back: "доставка (развоз), выдача" },
+    { front: "die Ware, -n", back: "товар" },
+    { front: "die Beladung, -en", back: "погрузка" },
+    { front: "ausladen", back: "разгружать" },
 
-  { front: "festigen", back: "укреплять, закреплять" },
-  { front: "der Zeitdruck (nur Sg.)", back: "нехватка времени, давление по времени" },
-  { front: "mehrfach", back: "многократно; неоднократно" },
-  { front: "sich auszahlen", back: "окупаться, приносить пользу" },
-  { front: "die Tätigkeit, -en", back: "деятельность; занятие; работа" },
-  { front: "die Werbeagentur, -en", back: "рекламное агентство" },
-  { front: "die Stellenanzeige, -n", back: "объявление о вакансии" },
-  { front: "die Buchhaltung, -en (meist Sg.)", back: "бухгалтерия, бухгалтерский учёт" },
-  { front: "beteiligt", back: "вовлечённый; участвующий" },
-  { front: "vorherig", back: "предыдущий" },
-  { front: "vertraut sein mit", back: "быть знакомым с, разбираться в" },
-  { front: "das Aufgabengebiet, -e", back: "круг задач, область обязанностей" },
-  { front: "flüssig", back: "бегло (о языке); плавный" },
-  { front: "bisherig", back: "до сих пор; прежний" },
-  { front: "sich einer Herausforderung stellen", back: "принять вызов, справиться с трудностью" },
-  { front: "lernbereit", back: "готовый учиться" },
-  { front: "zur Verfügung stehen", back: "быть в распоряжении, быть доступным" },
-  { front: "die Lücke, -n", back: "пробел, брешь" },
-  { front: "zur Welt bringen", back: "родить (ребёнка)" },
-  { front: "die Elternzeit (nur Sg.)", back: "родительский отпуск" },
-  { front: "sich weiterentwickeln", back: "развиваться дальше" },
-  { front: "erkrankt", back: "заболевший" },
-  { front: "die Fachkenntnis, -se", back: "профессиональные знания" },
-  { front: "der Tutor, -en", back: "тьютор, наставник" },
-  { front: "der Ablauf, -e", back: "ход процесса, последовательность" },
-  { front: "wöchentlich", back: "еженедельно" },
-  { front: "der Abteilungsleiter, =", back: "руководитель отдела" },
-  { front: "zukünftig", back: "будущий; в дальнейшем" },
-  { front: "die Einarbeitungsphase, -n", back: "период ввода в работу, адаптация" },
-  { front: "ausführlich", back: "подробный" },
-  { front: "die Filialleitung, -en", back: "руководство филиала" },
-  { front: "der Rat (nur Sg.)", back: "совет" },
-  { front: "skeptisch", back: "скептический" },
-  { front: "betreuen", back: "присматривать; сопровождать; курировать" },
-  { front: "zufällig", back: "случайный; случайно" },
-  { front: "kündigen", back: "увольнять(ся); расторгать договор" },
-  { front: "das Richtige für jemanden sein", back: "быть подходящим/правильным для кого-то" }
-];
+    { front: "voraussetzen", back: "предполагать, требовать (как условие)" },
 
-    let index = 0;
+    { front: "selbstständig", back: "самостоятельный; самозанятый" },
+    { front: "zuverlässig", back: "надёжный" },
 
-    const card = document.getElementById('card');
-    const front = document.getElementById('front');
-    const back = document.getElementById('back');
-    const counter = document.getElementById('counter');
+    { front: "die Arbeitsweise, -n", back: "способ работы, метод работы" },
+    { front: "die Weise, -n", back: "способ, манера", extra: true },
 
-    function renderCard() {
-      card.classList.remove('is-flipped');
-      front.textContent = words[index].front;
-      back.textContent = words[index].back;
-      counter.textContent = `${index + 1} / ${words.length}`;
-    }
+    { front: "unbefristet", back: "бессрочный" },
 
-    card.addEventListener('click', () => {
-      card.classList.toggle('is-flipped');
-    });
+    { front: "der Arbeitsvertrag, -e", back: "трудовой договор" },
+    { front: "der Vertrag, -¨e", back: "договор, контракт", extra: true },
 
-    function nextCard() {
-      index = (index + 1) % words.length;
-      renderCard();
-    }
+    { front: "krisensicher", back: "устойчивый к кризисам, надёжный в кризис" },
 
-    function prevCard() {
-      index = (index - 1 + words.length) % words.length;
-      renderCard();
-    }
+    { front: "der Arbeitgeber, =", back: "работодатель" },
+    { front: "der Geber, =", back: "тот, кто даёт; даритель (дающая сторона)", extra: true },
 
-    // Листання клавішами
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') nextCard();
-      if (e.key === 'ArrowLeft') prevCard();
-    });
+    { front: "die Schichteinteilung, -en", back: "распределение смен, график смен" },
+    { front: "die Einteilung, -en", back: "распределение, деление", extra: true },
 
+    { front: "die Aushilfe, -n", back: "подработка; помощник/временный работник" },
+
+    { front: "das Unternehmen, =", back: "предприятие, компания" },
+
+    { front: "die Voraussetzung, -en", back: "условие, предпосылка, требование" },
+    { front: "die Voraussetzung, -en", back: "условие, предпосылка (повтор для закрепления)", extra: true },
+
+    { front: "gängig", back: "распространённый, обычный" },
+    { front: "das Geschick, -e (meist Sg.)", back: "ловкость, умение" },
+    { front: "das Verhalten, = (meist Sg.)", back: "поведение" },
+    { front: "der Nachwuchs (nur Sg.)", back: "потомство; молодёжь/кадровая смена" },
+    { front: "mehrjährig", back: "многолетний" },
+    { front: "fundiert", back: "основательный, обоснованный" },
+    { front: "angemessen", back: "соответствующий, адекватный" },
+    { front: "das Honorar, -e (meist Sg.)", back: "гонорар" },
+    { front: "familienfreundlich", back: "дружелюбный к семье/семейный" },
+
+    { front: "das Arbeitsverhältnis, -se", back: "трудовые отношения" },
+    { front: "das Verhältnis, -se", back: "отношение, соотношение, связь", extra: true },
+
+    { front: "die Betreuung, -en", back: "уход; присмотр; сопровождение/кураторство" },
+
+    { front: "die Leitung, -en", back: "руководство; управление" },
+    { front: "präzise", back: "точный" },
+
+    { front: "die Bereitschaft, -en (meist Sg.)", back: "готовность" },
+
+    { front: "die Weiterbildung, -en", back: "повышение квалификации, дальнейшее обучение" },
+    { front: "die Bildung, -en", back: "образование", extra: true },
+
+    { front: "die Geschäftsleitung, -en", back: "руководство компании (дирекция)" },
+    { front: "die Leitung, -en", back: "руководство; управление", extra: true },
+
+    { front: "der Input, -s (meist Sg.)", back: "вклад; ввод/информация (input)" },
+    { front: "anwenden", back: "применять" },
+    { front: "wertvoll", back: "ценный" },
+    { front: "der Eindruck, -e", back: "впечатление" },
+
+    { front: "die Stressresistenz (nur Sg.)", back: "стрессоустойчивость" },
+    { front: "die Resistenz, -en", back: "устойчивость; сопротивляемость", extra: true },
+
+    { front: "festigen", back: "укреплять, закреплять" },
+
+    { front: "der Zeitdruck (nur Sg.)", back: "нехватка времени, давление по времени" },
+    { front: "der Druck, -¨e", back: "давление", extra: true },
+
+    { front: "mehrfach", back: "многократно; неоднократно" },
+
+    { front: "sich auszahlen", back: "окупаться, приносить пользу" },
+    { front: "auszahlen", back: "выплачивать; (перен.) окупаться", extra: true },
+
+    { front: "die Tätigkeit, -en", back: "деятельность; занятие; работа" },
+
+    { front: "die Werbeagentur, -en", back: "рекламное агентство" },
+    { front: "die Agentur, -en", back: "агентство", extra: true },
+
+    { front: "die Stellenanzeige, -n", back: "объявление о вакансии" },
+    { front: "die Anzeige, -n", back: "объявление", extra: true },
+
+    { front: "die Buchhaltung, -en (meist Sg.)", back: "бухгалтерия, бухгалтерский учёт" },
+    { front: "die Haltung, -en", back: "позиция; осанка; удерживание (слово-основа)", extra: true },
+
+    { front: "beteiligt", back: "вовлечённый; участвующий" },
+    { front: "vorherig", back: "предыдущий" },
+
+    { front: "vertraut sein mit", back: "быть знакомым с, разбираться в" },
+    { front: "vertraut", back: "знакомый; доверенный", extra: true },
+
+    { front: "das Aufgabengebiet, -e", back: "круг задач, область обязанностей" },
+    { front: "das Gebiet, -e", back: "область, территория", extra: true },
+
+    { front: "flüssig", back: "бегло (о языке); плавный" },
+    { front: "bisherig", back: "до сих пор; прежний" },
+
+    { front: "sich einer Herausforderung stellen", back: "принять вызов, справиться с трудностью" },
+    { front: "die Herausforderung, -en", back: "вызов, трудная задача", extra: true },
+
+    { front: "lernbereit", back: "готовый учиться" },
+
+    { front: "zur Verfügung stehen", back: "быть в распоряжении, быть доступным" },
+    { front: "die Verfügung, -en", back: "распоряжение; (юр.) постановление", extra: true },
+
+    { front: "die Lücke, -n", back: "пробел, брешь" },
+
+    { front: "zur Welt bringen", back: "родить (ребёнка)" },
+    { front: "die Welt (nur Sg.)", back: "мир", extra: true },
+
+    { front: "die Elternzeit (nur Sg.)", back: "родительский отпуск" },
+    { front: "die Zeit, -en", back: "время", extra: true },
+
+    { front: "sich weiterentwickeln", back: "развиваться дальше" },
+    { front: "entwickeln", back: "развивать(ся)", extra: true },
+
+    { front: "erkrankt", back: "заболевший" },
+
+    { front: "die Fachkenntnis, -se", back: "профессиональные знания" },
+    { front: "die Kenntnis, -se", back: "знание, осведомлённость", extra: true },
+
+    { front: "der Tutor, -en", back: "тьютор, наставник" },
+    { front: "der Ablauf, -e", back: "ход процесса, последовательность" },
+    { front: "wöchentlich", back: "еженедельно" },
+
+    { front: "der Abteilungsleiter, =", back: "руководитель отдела" },
+    { front: "der Leiter, =", back: "руководитель; (также) лестница", extra: true },
+
+    { front: "zukünftig", back: "будущий; в дальнейшем" },
+
+    { front: "die Einarbeitungsphase, -n", back: "период ввода в работу, адаптация" },
+    { front: "die Phase, -n", back: "фаза, этап", extra: true },
+
+    { front: "ausführlich", back: "подробный" },
+
+    { front: "die Filialleitung, -en", back: "руководство филиала" },
+    { front: "die Leitung, -en", back: "руководство; управление", extra: true },
+
+    { front: "der Rat (nur Sg.)", back: "совет" },
+    { front: "skeptisch", back: "скептический" },
+    { front: "betreuen", back: "присматривать; сопровождать; курировать" },
+    { front: "zufällig", back: "случайный; случайно" },
+    { front: "kündigen", back: "увольнять(ся); расторгать договор" },
+
+    { front: "das Richtige für jemanden sein", back: "быть подходящим/правильным для кого-то" },
+    { front: "richtig", back: "правильный, верный", extra: true }
+  ];
+
+  let index = 0;
+
+  const card = document.getElementById('card');
+  const front = document.getElementById('front');
+  const back = document.getElementById('back');
+  const counter = document.getElementById('counter');
+
+  function renderCard() {
+    card.classList.remove('is-flipped');
+
+    const item = words[index];
+
+    front.textContent = item.front;
+    back.textContent = item.back;
+
+    // якщо extra: true → кораловий фон на back-стороні
+    back.classList.toggle('card__back--extra', !!item.extra);
+
+    counter.textContent = `${index + 1} / ${words.length}`;
+  }
+
+  card.addEventListener('click', () => {
+    card.classList.toggle('is-flipped');
+  });
+
+  function nextCard() {
+    index = (index + 1) % words.length;
     renderCard();
-  </script>
+  }
+
+  function prevCard() {
+    index = (index - 1 + words.length) % words.length;
+    renderCard();
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextCard();
+    if (e.key === 'ArrowLeft') prevCard();
+  });
+
+  renderCard();
+</script>
 
 </body>
 </html>
